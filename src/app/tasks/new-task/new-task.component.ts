@@ -1,4 +1,4 @@
-import { Component,inject,input } from '@angular/core';
+import { Component,inject,input,signal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms"
 import { ITaskState } from '../../store/tasks/tasks.types';
 import { Store } from '@ngrx/store';
@@ -13,14 +13,15 @@ import { Router, RouterLink } from '@angular/router';
 })
 export class NewTaskComponent {
   userId = input.required<string>();
+  errorData=signal<boolean>(false);
   form =new FormGroup({
-    enteredTitle:new FormControl(' ',{
+    enteredTitle:new FormControl('',{
       validators:[Validators.required]
     }),
-    enteredSummary:new FormControl(' ',{
+    enteredSummary:new FormControl('',{
       validators:[Validators.required]
     }),
-    enteredDate:new FormControl(' ',{
+    enteredDate:new FormControl('',{
       validators:[Validators.required]
     })
   })
@@ -29,6 +30,10 @@ export class NewTaskComponent {
 
   onSubmit(){
     const {enteredTitle,enteredSummary,enteredDate}=this.form.value;
+    if(!enteredTitle || !enteredSummary|| !enteredDate){
+        this.errorData.set(true)
+        return;
+    }
      const newTask={
         id: new Date().getTime().toString(),
         userId: +this.userId(),

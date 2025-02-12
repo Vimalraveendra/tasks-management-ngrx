@@ -20,4 +20,7 @@
         <a routerLink="../">Cancel</a>
         <button type="submit">Create</button>
     </p>
+    @if(errorData()){
+    <p>Please enter a valid data to input fields.</p>
+    }
 </form>
