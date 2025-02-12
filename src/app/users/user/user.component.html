@@ -1,0 +1,6 @@
+<div>
+    <a [routerLink]="['users',user().id,'tasks']" routerLinkActive="selected">
+        <img [src]="'https://randomuser.me/api/portraits/thumb/men/'+user().id+'.jpg'" [alt]="user().name" />
+        <span>{{ user().name }}</span>
+    </a>
+</div>
