@@ -80,6 +80,11 @@
     background-color: #895cce;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
   }
+  .control-error {
+    color: #8e0753;
+    font-size: 1.2rem;
+    text-align: center;
+  }
   
   @media (min-width: 768px) {
     dialog {
