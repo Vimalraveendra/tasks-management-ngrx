@@ -1,4 +1,4 @@
-import { Component,inject,input,signal} from '@angular/core';
+import { Component,inject,input,OnInit,signal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms"
 import { ITaskState } from '../../store/tasks/tasks.types';
 import { Store } from '@ngrx/store';
@@ -11,7 +11,7 @@ import { Router, RouterLink } from '@angular/router';
   templateUrl: './new-task.component.html',
   styleUrl: './new-task.component.css'
 })
-export class NewTaskComponent {
+export class NewTaskComponent  implements OnInit{
   userId = input.required<string>();
   errorData=signal<boolean>(false);
   form =new FormGroup({
@@ -27,6 +27,16 @@ export class NewTaskComponent {
   })
   private store=inject(Store<{tasks:ITaskState}>)
   private router = inject(Router)
+
+  ngOnInit(): void {
+      this.form.valueChanges.subscribe({
+        next:(value)=>{
+          if(value && this.errorData()){
+             this.errorData.set(false)
+          }
+       }
+      })
+  }
 
   onSubmit(){
     const {enteredTitle,enteredSummary,enteredDate}=this.form.value;
